@@ -1,0 +1,12 @@
+.card1 {
+  box-sizing: border-box;
+  margin: 10%;
+  color: white;
+  border: transparent;
+  background: rgba(17, 17, 17, 0.904);
+
+  padding: 10%;
+}
+.text-white {
+  color: white;
+}
