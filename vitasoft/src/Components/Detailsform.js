@@ -2,19 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Container, Form, Col, Row, Button } from "react-bootstrap";
 
 import "./Detailsform.css";
-import { DataTable } from "./DataTable";
 export const Detailsform = ({ setFdata }) => {
   const [data, setData] = useState([
     {
       fname: "",
       lname: "",
       mname: "",
-      email: "",
-      phno: null,
       addr: "",
       country: "",
       state: "",
       zip: null,
+      email: "",
+      phno: null,
       height: null,
       weight: null
     }
@@ -43,11 +42,54 @@ export const Detailsform = ({ setFdata }) => {
     });
   }
 
+  // const addData = async e => {
+  //   const {
+  //     fname,
+  //     lname,
+  //     mname,
+  //     addr,
+  //     country,
+  //     state,
+  //     zip,
+  //     email,
+  //     phno,
+  //     height,
+  //     weight
+  //   } = data;
+
+  //   const res = await fetch("/form/save-details", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       fname,
+  //       lname,
+  //       mname,
+  //       addr,
+  //       country,
+  //       state,
+  //       zip,
+  //       email,
+  //       phno,
+  //       height,
+  //       weight
+  //     })
+  //   });
+
+  //   const data = await res.json();
+  //   if (data.status === 422 || !data) {
+  //     window.alert("Fields Missing");
+  //   } else {
+  //     window.alert("Data successfully added");
+  //   }
+  // };
+
   return (
     <Container>
       <div class="card1">
         <Col sm={12} md={5} lg={10}>
-          <Form>
+          <Form method="POST">
             <Form.Group controlId="formGridName">
               <Form.Label>First Name:</Form.Label>
               <Form.Control
@@ -89,9 +131,9 @@ export const Detailsform = ({ setFdata }) => {
               <Form.Control
                 type="email"
                 placeholder="Enter your email id"
-                name="name"
+                name="email"
                 onChange={inputEvent}
-                value={data.name}
+                value={data.email}
                 required
               />
             </Form.Group>
