@@ -1,23 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Form, Col, Row, Button } from "react-bootstrap";
 
 import "./Detailsform.css";
 export const Detailsform = ({ setFdata }) => {
-  const [data, setData] = useState([
-    {
-      fname: "",
-      lname: "",
-      mname: "",
-      addr: "",
-      country: "",
-      state: "",
-      zip: null,
-      email: "",
-      phno: null,
-      height: null,
-      weight: null
-    }
-  ]);
+  const [data, setData] = useState({
+    fname: "",
+    lname: "",
+    mname: "",
+    addr: "",
+    country: "",
+    state: "",
+    zip: null,
+    email: "",
+    phno: null,
+    height: null,
+    weight: null
+  });
 
   const inputEvent = event => {
     const { value, name } = event.target;
@@ -25,65 +23,52 @@ export const Detailsform = ({ setFdata }) => {
     console.log(data);
   };
 
-  function addData() {
-    setFdata(d => [...d, data]);
-    setData({
-      fname: "",
-      lname: "",
-      mname: "",
-      email: "",
-      phno: null,
-      addr: "",
-      country: "",
-      state: "",
-      zip: null,
-      height: null,
-      weight: null
-    });
-  }
+  // cd
 
-  // const addData = async e => {
-  //   const {
-  //     fname,
-  //     lname,
-  //     mname,
-  //     addr,
-  //     country,
-  //     state,
-  //     zip,
-  //     email,
-  //     phno,
-  //     height,
-  //     weight
-  //   } = data;
-
-  //   const res = await fetch("/form/save-details", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     },
-  //     body: JSON.stringify({
-  //       fname,
-  //       lname,
-  //       mname,
-  //       addr,
-  //       country,
-  //       state,
-  //       zip,
-  //       email,
-  //       phno,
-  //       height,
-  //       weight
-  //     })
-  //   });
-
-  //   const data = await res.json();
-  //   if (data.status === 422 || !data) {
-  //     window.alert("Fields Missing");
-  //   } else {
-  //     window.alert("Data successfully added");
-  //   }
-  // };
+  const addData = async e => {
+    try {
+      const {
+        fname,
+        lname,
+        mname,
+        addr,
+        country,
+        state,
+        zip,
+        email,
+        phno,
+        height,
+        weight
+      } = data;
+      const res = await fetch("http://localhost:5000/form/save-details", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          fname,
+          lname,
+          mname,
+          addr,
+          country,
+          state,
+          zip,
+          email,
+          phno,
+          height,
+          weight
+        })
+      });
+      const data = await res.json();
+      if (!data) {
+        window.alert("Fields Missing");
+      } else {
+        window.alert("Data successfully added");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Container>

@@ -1,14 +1,14 @@
 import "./App.css";
 import { Detailsform } from "./Components/Detailsform";
 import React, { useState } from "react";
-import { DataTable } from "./Components/DataTable";
+// import { DataTable } from "./Components/DataTable";
 
 function App() {
-  const [fdata, setFdata] = useState([]);
+  // const [fdata, setFdata] = useState([]);
   return (
     <>
-      <Detailsform setFdata={setFdata} />
-      <DataTable fdata={fdata} />
+      <Detailsform />
+      {/* <DataTable /> */}
     </>
   );
 }

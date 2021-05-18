@@ -23,7 +23,7 @@ app.listen(PORT, console.log("server running"));
 const insertLoginData = async () => {
   try {
     await Login.deleteMany();
-    const newlogin = await Login.insertMany(logindata);
+    await Login.insertMany(logindata);
     console.log("Login Details inserted");
   } catch (error) {
     console.log(`${error}`);
