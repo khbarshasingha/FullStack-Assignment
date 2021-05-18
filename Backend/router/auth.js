@@ -61,7 +61,8 @@ router.post("/form/save-details", async (req, res) => {
   }
 });
 
-// router.get("/login",(req,res)=>{
-//     const login= new  Login
-// })
+router.get("/login", async (req, res) => {
+  res.send("hello from login");
+  console.log("hello from login");
+});
 export default router;
