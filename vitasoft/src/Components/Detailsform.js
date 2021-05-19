@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Form, Col, Row, Button } from "react-bootstrap";
+import axios from "axios";
 
 import "./Detailsform.css";
 export const Detailsform = ({ setFdata }) => {
@@ -18,53 +19,24 @@ export const Detailsform = ({ setFdata }) => {
   });
 
   const inputEvent = event => {
-    const { value, name } = event.target;
+    const { name, value } = event.target;
     setData({ ...data, [name]: value });
-    console.log(data);
   };
 
-  // cd
-
-  const addData = async e => {
-    try {
-      const {
-        fname,
-        lname,
-        mname,
-        addr,
-        country,
-        state,
-        zip,
-        email,
-        phno,
-        height,
-        weight
-      } = data;
-      const res = await fetch("http://localhost:5000/form/save-details", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          fname,
-          lname,
-          mname,
-          addr,
-          country,
-          state,
-          zip,
-          email,
-          phno,
-          height,
-          weight
-        })
-      });
-      const data = await res.json();
-      if (!data) {
-        window.alert("Fields Missing");
-      } else {
-        window.alert("Data successfully added");
+  const postData = async formData => {
+    setFdata(d => [...d, data]);
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
       }
+    };
+
+    try {
+      await axios.post(
+        "http://localhost:5000/form/save-details",
+        formData,
+        config
+      );
     } catch (err) {
       console.log(err);
     }
@@ -74,7 +46,40 @@ export const Detailsform = ({ setFdata }) => {
     <Container>
       <div class="card1">
         <Col sm={12} md={5} lg={10}>
-          <Form method="POST">
+          <Form
+            onSubmit={e => {
+              e.preventDefault();
+
+              let formData = {
+                fname: data.fname,
+                lname: data.lname,
+                mname: data.mname,
+                addr: data.addr,
+                country: data.country,
+                state: data.state,
+                zip: data.zip,
+                email: data.email,
+                phno: data.phno,
+                height: data.height,
+                weight: data.weight
+              };
+              console.log(formData);
+              postData(formData);
+              setData({
+                fname: "",
+                lname: "",
+                mname: "",
+                addr: "",
+                country: "",
+                state: "",
+                zip: null,
+                email: "",
+                phno: null,
+                height: null,
+                weight: null
+              });
+            }}
+          >
             <Form.Group controlId="formGridName">
               <Form.Label>First Name:</Form.Label>
               <Form.Control
@@ -225,7 +230,7 @@ export const Detailsform = ({ setFdata }) => {
               </Form.Group>
             </Form.Row>
 
-            <Button variant="primary" type="submit" onClick={addData}>
+            <Button variant="primary" type="submit">
               Save
             </Button>
           </Form>
